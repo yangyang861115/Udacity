@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="c" width="500" height="500"></canvas>
+
+    <script>
+        var c = document.querySelector("#c");
+        var ctx = c.getContext("2d");
+
+        //        var image = new Image();
+        //        image.onload = function(){
+        //            console.log("Loaded image");
+        //            ctx.drawImage(image, 0, 0, c.width, c.height); 
+        //            var savedImage = c.toDataURL();
+        //            window.open(savedIamge);
+        //        }
+        //        image.src = "avatar.jpg";
+        //       ctx.fillStyle = "blue";
+        //ctx.strokeStyle = "red";
+        // Start at (0,0) and draw a 50px x 50px blue rectangle.
+        //        ctx.fillRect(0,0,50,50);
+        // Start at (0,0) and clear a 25px x 25px rectangle.
+        //      ctx.clearRect(0,0,25,25);
+
+        //ctx.fillRect(100, 100, 100, 100);
+        //ctx.strokeRect(50, 50, 100, 100);
+        //ctx.clearRect(0, 0, c.width, c.height);
+
+        //        ctx.beginPath();
+        //        ctx.moveTo(75, 75);
+        //        ctx.lineTo(125, 75);
+        //        ctx.lineTo(125, 125);
+        //        ctx.lineTo(75, 75);
+        //        ctx.fill();
+        //ctx.stroke();
+
+        //scale(x,y) multiplies the x and y values by a given factor so
+        //translate(x,y) moves all subsequent draw commands by x number of pixels on horizontally and y pixels vertically.
+        //ctx.rotate(angleRadians) rotates an object a certain number of radians (generally) about its center. You may have learned about radians in school but here's a handy formula to convert a value from degrees to radians.
+        //radians = degrees * (Math.PI/180)
+        //        ctx.fillStyle = "white";
+        //        ctx.strokeStyle = "black";
+        //        ctx.lineWidth = 3;
+        //        ctx.font = "36px impact";
+        //        ctx.textAlign = "center";
+        //
+        //        ctx.fillText("CANVAS MEMES", 150, 50);
+        //        ctx.strokeText("CANVAS MEMES", 150, 50);
+
+
+
+        //createImageData, getImageData, putImageData
+
+        //        var data = ctx.getImageData(0, 0, 500, 500);
+        //        function paintGreen(imageData) {
+        //            var numPixels = imageData.data.length / 4;
+        //            for (var i = 0; i < numPixels; i++) {
+        //                if (i % 10 === 0) {
+        //                    imageData.data[i * 4 + 1] = 255;
+        //                    imageData.data[i * 4 + 3] = 255;
+        //                }
+        //            }
+        //            ctx.putImageData(imageData, 0, 0);
+        //        }
+        //        paintGreen(data);
+
+        //grayscale
+        var image = new Image();
+        image.onload = function () {
+            ctx.drawImage(image, 0, 0);
+            makeGrayScale();
+        }
+        image.src = "avatar.jpg";
+
+        var makePixelGrayScale = function (r, g, b, a) {
+            var y = (0.3 * r) + (0.59 * g) + (0.11 * b);
+            return y;
+    
+        }
+
+        function makeGrayScale() {
+            var r, g, b, a;
+            var imageData = ctx.getImageData(0, 0, 500, 500);
+            var numPixels = imageData.data.length / 4;
+            for (var i = 0; i < numPixels; i++) {
+                r = imageData.data[i * 4 + 0];
+                g = imageData.data[i * 4 + 1];
+                b = imageData.data[i * 4 + 2];
+                a = imageData.data[i * 4 + 3];
+                
+                y = makePixelGrayScale(r, g, b, a);
+                imageData.data[i * 4 + 0] = y;
+                imageData.data[i * 4 + 1] = y;
+                imageData.data[i * 4 + 2] = y;
+                imageData.data[i * 4 + 3] = y;
+
+            }
+            ctx.putImageData(imageData, 0, 0);
+        }
+    </script>
+</body>
+
+</html>
